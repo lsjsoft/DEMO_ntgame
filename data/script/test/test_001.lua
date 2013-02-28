@@ -1,5 +1,6 @@
 local plugName= "mySimple"
 local plugType= "nifSimple"
+local scope= createScope()
 
 function a()
 	gs.addPlug(plugType, plugName)
@@ -10,8 +11,8 @@ function b()
 end
 
 function c()
-	local scope= createScope()
 	scope:listen("11", function(...) gs.print("myEvent01 call!") end)
+	scope:setTimer(1, 1, function() gs.print("haha") end)
 end
 
 function d()
