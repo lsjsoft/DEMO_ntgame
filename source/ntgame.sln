@@ -1,0 +1,29 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 9.00
+# Visual Studio 2005
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ntgame", "ntgame.vcproj", "{842CEF8D-82A1-4946-BE47-8BB7E5CFDDAB}"
+	ProjectSection(ProjectDependencies) = postProject
+		{15596446-48BB-4720-9535-CF8EE0FD152A} = {15596446-48BB-4720-9535-CF8EE0FD152A}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LuaLib", "..\luaLib\LuaLib.vcproj", "{15596446-48BB-4720-9535-CF8EE0FD152A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{842CEF8D-82A1-4946-BE47-8BB7E5CFDDAB}.Debug|Win32.ActiveCfg = Debug|Win32
+		{842CEF8D-82A1-4946-BE47-8BB7E5CFDDAB}.Debug|Win32.Build.0 = Debug|Win32
+		{842CEF8D-82A1-4946-BE47-8BB7E5CFDDAB}.Release|Win32.ActiveCfg = Release|Win32
+		{842CEF8D-82A1-4946-BE47-8BB7E5CFDDAB}.Release|Win32.Build.0 = Release|Win32
+		{15596446-48BB-4720-9535-CF8EE0FD152A}.Debug|Win32.ActiveCfg = Debug|Win32
+		{15596446-48BB-4720-9535-CF8EE0FD152A}.Debug|Win32.Build.0 = Debug|Win32
+		{15596446-48BB-4720-9535-CF8EE0FD152A}.Release|Win32.ActiveCfg = Release|Win32
+		{15596446-48BB-4720-9535-CF8EE0FD152A}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
