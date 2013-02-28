@@ -1,7 +1,19 @@
+local plugName= "mySimple"
+local plugType= "nifSimple"
+
 function a()
-	gs.addPlug("1", "1")
+	gs.addPlug(plugType, plugName)
 end
 
 function b()
-	gs.removePlug("1")
+	gs.addNif(plugName, "../data/effect/BUFF_FX042.nif")
+end
+
+function c()
+	local scope= createScope()
+	scope:listen("11", function(...) gs.print("myEvent01 call!") end)
+end
+
+function d()
+	fireEvent("11")
 end

@@ -157,3 +157,15 @@ void ntScene::setCamera( NiCameraPtr spCamera )
 {
     m_spCurrentCamera= spCamera;
 }
+
+ntPlugPtr ntScene::getPlug( const std::wstring& rkPlugName )
+{
+	for each( ntPlugPtr p in m_plugs)
+	{
+		if (p->getName() == rkPlugName)
+		{
+			return p;
+		}
+	}
+	return NULL;
+}

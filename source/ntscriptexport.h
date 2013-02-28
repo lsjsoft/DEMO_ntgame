@@ -1613,6 +1613,47 @@ fail:
 }
 
 
+static int _wrap_addNif(lua_State* L) {
+  int SWIG_arg = 0;
+  char *arg1 = (char *) 0 ;
+  char *arg2 = (char *) 0 ;
+  
+  SWIG_check_num_args("addNif",2,2)
+  if(!SWIG_lua_isnilstring(L,1)) SWIG_fail_arg("addNif",1,"char const *");
+  if(!SWIG_lua_isnilstring(L,2)) SWIG_fail_arg("addNif",2,"char const *");
+  arg1 = (char *)lua_tostring(L, 1);
+  arg2 = (char *)lua_tostring(L, 2);
+  addNif((char const *)arg1,(char const *)arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_clearNif(lua_State* L) {
+  int SWIG_arg = 0;
+  char *arg1 = (char *) 0 ;
+  
+  SWIG_check_num_args("clearNif",1,1)
+  if(!SWIG_lua_isnilstring(L,1)) SWIG_fail_arg("clearNif",1,"char const *");
+  arg1 = (char *)lua_tostring(L, 1);
+  clearNif((char const *)arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
 #ifdef __cplusplus
 }
 #endif
@@ -1621,6 +1662,8 @@ static const struct luaL_reg swig_commands[] = {
     { "print", _wrap_print},
     { "addPlug", _wrap_addPlug},
     { "removePlug", _wrap_removePlug},
+    { "addNif", _wrap_addNif},
+    { "clearNif", _wrap_clearNif},
     {0,0}
 };
 

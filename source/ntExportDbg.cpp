@@ -4,6 +4,7 @@
 #include "ntCodeConvert.h"
 #include "ntConsole.h"
 #include "ntScene.h"
+#include "ntSimpleNifRenderSet.h"
 
 void print( const char* str )
 {
@@ -45,3 +46,38 @@ void calc(NiCamera* pSrc, const NiPoint3& rkSrcPos,
     pDst->GetWorldTransform().Invert(invDstTransform);
     NiPoint3 v= invDstTransform * srcTransform * rkSrcPos - rkDstPos;  
 }
+
+void addNif( const char* plugName, const char* nifName )
+{
+	if (!plugName || !nifName)
+	{
+		return;
+	}
+
+	ntPlug* plug= ntScene::getIns()->getPlug(ntstow(plugName));
+	ntSimpleNifRenderSet* nifRender= dynamic_cast<ntSimpleNifRenderSet*>(plug);
+	if (!nifRender)
+	{
+		return;
+	}
+
+	nifRender->addNif( ntstow(nifName));
+}
+
+void clearNif( const char* plugName )
+{
+	if (!plugName)
+	{
+		return;
+	}
+
+	ntPlug* plug= ntScene::getIns()->getPlug(ntstow(plugName));
+	ntSimpleNifRenderSet* nifRender= dynamic_cast<ntSimpleNifRenderSet*>(plug);
+	if (!nifRender)
+	{
+		return;
+	}
+
+	nifRender->removeAll();
+}
+

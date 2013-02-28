@@ -33,12 +33,12 @@
 #include <memory.h>
 #include <tchar.h>
 
+
 #include <string>
 #include <vector>
 #include <list>
 #include <map>
 #include <algorithm>
-// TODO: reference additional headers your program requires here
 #include <mmsystem.h>
 
 
@@ -80,9 +80,6 @@
 #pragma comment(lib, "NiParticle.lib")
 #pragma comment(lib, "NiCollision.lib")
 #pragma comment(lib, "NiPortal.lib")
-
-//"$(EGB_PATH)\SDK\Win32\Include"
-//"$(EGB_PATH)\SDK\Win32\Lib\VC80\DebugLib"
 
 typedef std::wstring ntString;
 typedef std::vector<ntString> ntStrings;

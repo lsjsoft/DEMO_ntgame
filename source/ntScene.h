@@ -19,6 +19,7 @@ public:
 
     ntPlugPtr addPlug(const std::wstring& rkPlugType, const std::wstring& rkPlugName);
     bool removePlug(const std::wstring& rkPlugName);
+	ntPlugPtr getPlug(const std::wstring& rkPlugName);
 
     void setDefaultCamera();
     void setCamera(NiCameraPtr spCamera);

@@ -176,18 +176,46 @@
 	</References>
 	<Files>
 		<Filter
-			Name="ntgame"
+			Name="gfx"
 			>
 			<File
-				RelativePath=".\essential.h"
+				RelativePath=".\ntImage.cpp"
 				>
 			</File>
+			<File
+				RelativePath=".\ntImage.h"
+				>
+			</File>
+			<File
+				RelativePath=".\ntImageImpl.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\ntImageImpl.h"
+				>
+			</File>
+			<File
+				RelativePath=".\ntSimpleNifRender.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\ntSimpleNifRender.h"
+				>
+			</File>
+			<File
+				RelativePath=".\ntSimpleNifRenderSet.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\ntSimpleNifRenderSet.h"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="appFrame"
+			>
 			<File
 				RelativePath=".\iWindowMsgListen.h"
-				>
-			</File>
-			<File
-				RelativePath=".\macro.h"
 				>
 			</File>
 			<File
@@ -196,14 +224,6 @@
 			</File>
 			<File
 				RelativePath=".\ntApp.h"
-				>
-			</File>
-			<File
-				RelativePath=".\ntCodeConvert.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\ntCodeConvert.h"
 				>
 			</File>
 			<File
@@ -255,33 +275,65 @@
 				>
 			</File>
 			<File
-				RelativePath=".\ntSimpleNifRender.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\ntSimpleNifRender.h"
-				>
-			</File>
-			<File
 				RelativePath=".\stdafx.h"
 				>
 			</File>
+		</Filter>
+		<Filter
+			Name="define"
+			>
+			<File
+				RelativePath=".\essential.h"
+				>
+			</File>
+			<File
+				RelativePath=".\macro.h"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="assist"
+			>
+			<File
+				RelativePath=".\ntCodeConvert.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\ntCodeConvert.h"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="script"
+			>
+			<File
+				RelativePath=".\exportList.h"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						CommandLine="$(SolutionDir)\..\Dependencies\Swigwin\swig.exe -c++ -lua -o ntscriptexport.h $(InputFileName)&#x0D;&#x0A;"
+						Outputs="ntscriptexport.h"
+					/>
+				</FileConfiguration>
+			</File>
 			<Filter
-				Name="script"
+				Name="export"
 				>
 				<File
-					RelativePath=".\exportList.h"
+					RelativePath=".\ntExportDbg.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCustomBuildTool"
-							CommandLine="$(SolutionDir)\..\Dependencies\Swigwin\swig.exe -c++ -lua -o ntscriptexport.h $(InputFileName)&#x0D;&#x0A;"
-							Outputs="ntscriptexport.h"
-						/>
-					</FileConfiguration>
 				</File>
+				<File
+					RelativePath=".\ntExportDbg.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="base"
+				>
 				<File
 					RelativePath=".\ntScriptBase.h"
 					>
@@ -306,36 +358,8 @@
 					RelativePath=".\ntScriptUser.h"
 					>
 				</File>
-				<Filter
-					Name="export"
-					>
-					<File
-						RelativePath=".\ntExportDbg.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\ntExportDbg.h"
-						>
-					</File>
-				</Filter>
 			</Filter>
 		</Filter>
-		<File
-			RelativePath=".\ntImage.cpp"
-			>
-		</File>
-		<File
-			RelativePath=".\ntImage.h"
-			>
-		</File>
-		<File
-			RelativePath=".\ntImageImpl.cpp"
-			>
-		</File>
-		<File
-			RelativePath=".\ntImageImpl.h"
-			>
-		</File>
 	</Files>
 	<Globals>
 	</Globals>

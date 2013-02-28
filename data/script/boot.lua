@@ -1,6 +1,13 @@
 
 local updateTable= {}
 
+local files=
+{
+	"../data/script/timer.lua",
+	"../data/script/scope.lua",
+	"../data/script/test/test_001.lua",
+}
+
 function ntError(str)
 	print(str)
 end
@@ -9,16 +16,16 @@ function ntWarning(str)
 	print(str)
 end
 
+function reload()
+	for i, v in ipairs(files) do
+		dofile(v)
+	end
+end
+
 function ntInit()
 	gs.print("script init..")
-	dofile("../data/script/timer.lua")
-	timer.set(1, 10, function()
-		print("ÄãºÃ")
-	end)
-
-	timer.set(1, 1, function()
-		dofile("../data/script/test/test_001.lua")
-	end)
+	reload()
+	gs.print("script ok..")
 end
 
 function ntUpdate(fTime)

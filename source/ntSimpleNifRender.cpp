@@ -36,40 +36,15 @@ static void getTimeLine(NiAVObject* pkObject, float& minTime, float& maxTime)
     }
 }
 
-/*
-static NiCamera* findCamera(NiAVObject* pkObject)
-{
-    if (NiIsKindOf(NiCamera, pkObject))
-    {
-        return (NiCamera*)pkObject;
-    }
-    else if (NiIsKindOf(NiNode, pkObject))
-    {
-        NiNode* pkNode = (NiNode*)pkObject;
-
-        for (unsigned int ui = 0; ui < pkNode->GetArrayCount(); ui++)
-        {
-            NiCamera* pCamear= findCamera(pkNode->GetAt(ui));
-            if (pCamear)
-            {
-                return pCamear;
-            }
-        }
-    }
-
-    return NULL;
-}
-
-*/
-
-ntSimpleNifRender::ntSimpleNifRender(const std::wstring& rkName)
-: ntPlug(rkName)
-, fTime(0.0f)
+ntSimpleNifRender::ntSimpleNifRender()
+: m_fTime(0.0f)
+, m_spRootNode(NULL)
 {
 }
 
 ntSimpleNifRender::~ntSimpleNifRender(void)
 {
+	unload();
 }
 
 void ntSimpleNifRender::render()
@@ -82,16 +57,21 @@ void ntSimpleNifRender::render()
 
 void ntSimpleNifRender::update( float fDeltaTime )
 {
-    fTime+= fDeltaTime;
+    m_fTime+= fDeltaTime;
     if (m_spRootNode)
     {
-        m_spRootNode->Update(fTime);
+        m_spRootNode->Update(m_fTime);
     }
 }
 
 bool ntSimpleNifRender::load()
 {
-    m_strPathname = L"../data/effect/BUFF_FX042.nif";
+	m_spRootNode= NULL;
+
+	if (m_strPathname.empty())
+	{
+		return false;
+	}
 
     NiStream Stream;
     if (! Stream.Load( ntwtos(m_strPathname).c_str()))
@@ -114,9 +94,6 @@ bool ntSimpleNifRender::load()
     m_spRootNode->UpdateEffects();
     m_spRootNode->Update(0.0f);
 
-    //float minTime=0.0f, maxTime=0.0f;
-    //getTimeLine(m_spRootNode, minTime, maxTime);
-
     m_spRootNode->UpdateNodeBound();
     m_spRootNode->UpdateWorldBound();
     m_spRootNode->SetScale(1.0f);
@@ -131,4 +108,10 @@ bool ntSimpleNifRender::load()
 void ntSimpleNifRender::unload()
 {
     m_spRootNode= NULL;
+	m_fTime= 0.0f;
+}
+
+void ntSimpleNifRender::setNif( const ntString& rkPathname )
+{
+	m_strPathname= rkPathname;
 }

@@ -1,22 +1,24 @@
 #pragma once
 #include "ntPlug.h"
 
-class ntSimpleNifRender: public ntPlug
+class ntSimpleNifRender
 {
 public:
-    ntSimpleNifRender(const std::wstring& rkName);
+    ntSimpleNifRender();
     ~ntSimpleNifRender(void);
 
-    virtual bool load();
-    virtual void unload();
-    virtual void render();
-    virtual void update(float fDeltaTime);
+    void setNif(const ntString& rkPathname);
+
+	void unload();
+	bool load();
+
+    void render();
+    void update(float fDeltaTime);
 
 protected:
-    float fTime;
+    float m_fTime;
     NiNodePtr m_spRootNode;
-    NiCameraPtr m_spCamera;
-    std::wstring m_strPathname;
+	ntString m_strPathname;
 };
 
 NiSmartPointer(ntSimpleNifRender);
