@@ -1,45 +1,37 @@
 #pragma once
 
-#include "AxLuaBase.h"
+#include "ntScriptBase.h"
 
-// this code pushes a C++ pointer as well as the SWIG type onto the Lua stack
 bool PushPointer(lua_State* L, void* ptr, const char* type_name, int owned);
 
-// this code pops a C++ pointer as well as the SWIG type from the Lua stack
 bool PopPointer(lua_State* L, void** ptr, const char* type_name, int idx);
 
-// 错误的函数调用（Lua函数不存在）
 void ErrorFunction(const char* pszFunctionName);
 
-// 错误的函数调用（Lua函数参数问题）
 void ErrorCall(const char* pszFunctionName, const char* pszErrorMsg);
 
-// 错误的Lua函数参数传入
 void ErrorParameter(const char* pszTypeName);
 
-// 错误的Lua函数参数传出
 void ErrorReturn(const char* pszTypeName);
 
-#define LUA_ERROR_FUNCTION(name)                ErrorFunction(name)
-#define LUA_ERROR_CALL(name, errorMsg)          ErrorCall(name, errorMsg)
-#define LUA_ERROR_PARAMETER(name)               ErrorParameter(name)
-#define LUA_ERROR_RETURN(name)
+#define NT_LUAERRORFUNC(name)                ErrorFunction(name)
+#define NT_LUAERRORCALL(name, errorMsg)          ErrorCall(name, errorMsg)
+#define NT_LUAERRORARGS(name)               ErrorParameter(name)
+#define NT_LUAERRORRT(name)
 
 namespace Lua
 {
     template<typename TValue>
-    struct TypeWrapper
+    struct ntTpWrapper
     {
         inline static void Push(lua_State* L, const TValue& e)
         {
-            //TValue& rValue = const_cast<TValue& >(e);
             TValue* pValue = DEBUGNEW TValue(e);
-            //TValue* pValue = &rValue;
 
             const char* pszTypeName = typeid(pValue).name();
             if(!PushPointer(L, pValue, pszTypeName, 1))
             {
-                LUA_ERROR_PARAMETER(pszTypeName);
+                NT_LUAERRORARGS(pszTypeName);
             }
         }
 
@@ -65,68 +57,48 @@ namespace Lua
     };
 
     template<typename TValue>
-    struct TypeWrapper<TValue *>
+    struct ntTpWrapper<TValue *>
     {
-        /*inline static void Push(lua_State* L, TValue* e)
-        {
-            const char* pszTypeName = typeid(e).name();
-            if(!PushPointer(L, e,  pszTypeName, 0))
-            {
-                LUA_ERROR_PARAMETER(pszTypeName);
-            }
-        }*/
     };
 
     template<typename TValue>
-    struct TypeWrapper<const TValue *>
+    struct ntTpWrapper<const TValue *>
     {
-        /*inline static void Push(lua_State* L, const TValue* e)
-        {
-            TValue* pValue = const_cast<TValue*>(e);
-            const char* pszTypeName = typeid(e).name();
-            if(PushPointer(L, pValue, pszTypeName, 0))
-            {
-                LUA_ERROR_PARAMETER(pszTypeName);
-            }
-        }*/
     };
 
     template<typename TValue>
-    struct TypeWrapper<TValue &>
+    struct ntTpWrapper<TValue &>
     {
         inline static void Push(lua_State* L, TValue& e)
         {
             TValue* pValue = DEBUGNEW TValue(e);
-            //TValue* pValue = &e;
 
             const char* pszTypeName = typeid(pValue).name();
             if(!PushPointer(L, pValue, pszTypeName, 1))
             {
-                LUA_ERROR_PARAMETER(pszTypeName);
+                NT_LUAERRORARGS(pszTypeName);
             }
         }
     };
 
     template<typename TValue>
-    struct TypeWrapper<const TValue &>
+    struct ntTpWrapper<const TValue &>
     {
         inline static void Push(lua_State* L, const TValue& e)
         {
-            //TValue& rValue = const_cast<TValue& >(e);
             TValue* pValue = DEBUGNEW TValue(e);
-            //TValue* pValue = &rValue;
 
             const char* pszTypeName = typeid(pValue).name();
             if(!PushPointer(L, pValue, pszTypeName, 1))
             {
-                LUA_ERROR_PARAMETER(pszTypeName);
+                NT_LUAERRORARGS(pszTypeName);
             }
         }
     };
 
 
     template<>
-    struct TypeWrapper<std::string >
+    struct ntTpWrapper<std::string >
     {
         inline static void Push(lua_State* L, const std::string& value)             
         {
@@ -152,7 +124,7 @@ namespace Lua
     };
 
     template<>
-    struct TypeWrapper<const std::string& >
+    struct ntTpWrapper<const std::string& >
     {
         inline static void Push(lua_State* L, const std::string& value)             
         {

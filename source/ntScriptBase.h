@@ -1,12 +1,12 @@
 #pragma once
 
 #ifdef _DEBUG
-#define _CRTDBG_MAP_ALLOC
-#include <stdlib.h>
-#include <crtdbg.h>
-#define DEBUGNEW   new(_NORMAL_BLOCK, __FILE__, __LINE__)
+	#define _CRTDBG_MAP_ALLOC
+	#include <stdlib.h>
+	#include <crtdbg.h>
+	#define DEBUGNEW   new(_NORMAL_BLOCK, __FILE__, __LINE__)
 #else
-#define DEBUGNEW   new
+	#define DEBUGNEW   new
 #endif
 
 #include "lua.h"
@@ -15,26 +15,25 @@
 
 namespace Lua
 {
-    class AutoBlock
+    class ntAutoBlock
     {
     public:
 
-        AutoBlock(lua_State* state)
+        ntAutoBlock(lua_State* state)
             : m_pState(state)
             , m_iStackTop(lua_gettop(m_pState))
         {
 
         }
 
-        ~AutoBlock()
+        ~ntAutoBlock()
         {
             lua_settop(m_pState, m_iStackTop);
         }
 
     private:
-
-        AutoBlock(const AutoBlock& );                         // 不需要实现
-        const AutoBlock& operator = (const AutoBlock& );      // 不需要实现
+        ntAutoBlock(const ntAutoBlock& );                   
+        const ntAutoBlock& operator = (const ntAutoBlock& );
 
     private:
 
@@ -42,47 +41,39 @@ namespace Lua
         int m_iStackTop;
     };
 
-    /** 根据类型得到对应的返回值类型和参数类型 */
     template<typename _Type>
-    struct TypeTraits
+    struct ntTypeTraits
     {
         typedef _Type ReturnType;
         typedef _Type ParamType;
     };
 
-    /** 类型封装器，通过它可以向脚本中压入某个类型的值
-     *  和从脚本中提取出某个类型的值，检查类型以及提高该类型的默认值
-     */
     template<typename _Type>
-    struct TypeWrapper;
+    struct ntTpWrapper;
 
-    /** 返回值类型封装器，提供真正的返回值类型和对应的类型封装器 */
     template<typename _Type >
-    struct ReturnWrapper
+    struct ntReturnWrapper
     {
-        typedef typename TypeTraits<_Type >::ReturnType RT;
-        typedef typename TypeWrapper<RT > RW; 
+        typedef typename ntTypeTraits<_Type >::ReturnType RT;
+        typedef typename ntTpWrapper<RT > RW; 
     };
 
-    /** 参数类型封装器，提供真正的参数类型和对应的类型封装器 */
     template<typename _Type >
     struct ParamWrapper
     {
-        typedef typename TypeTraits<_Type >::ParamType PT;
-        typedef typename TypeWrapper<PT > PW; 
+        typedef typename ntTypeTraits<_Type >::ParamType PT;
+        typedef typename ntTpWrapper<PT > PW; 
     };
 
-    /** 不提供任何封装的类型封装器实现 */
-    #define TypeWrapper_NoneImpl(_Type)\
+    #define ntTypeWrapper_NoneImpl(_Type)\
     template<>\
-    struct TypeWrapper<_Type >\
+    struct ntTpWrapper<_Type >\
     {\
     }
 
-    /** Number类型封装器实现 */
-    #define TypeWrapper_NumberImpl(_Type)\
+    #define ntTypeWrapper_NumberImpl(_Type)\
     template<>\
-    struct TypeWrapper<_Type >\
+    struct ntTpWrapper<_Type >\
     {\
         inline static void Push(lua_State* L, _Type value)             \
         {\
@@ -102,9 +93,8 @@ namespace Lua
         }\
     }
 
-    /** Boolean类型封装器实现 */
     template<>
-    struct TypeWrapper<bool >
+    struct ntTpWrapper<bool >
     {
         inline static void Push(lua_State* L, bool value) 
         { 
@@ -127,9 +117,8 @@ namespace Lua
         }
     };    
     
-    /** const char*类型封装器实现 */
     template<>
-    struct TypeWrapper<const char* >
+    struct ntTpWrapper<const char* >
     {
         inline static void Push(lua_State* L, const char* value)             
         {
@@ -155,9 +144,8 @@ namespace Lua
     };
 
 
-    /** char*类型封装器实现，不提供作为返回值的封装 */
     template<>
-    struct TypeWrapper<char* >
+    struct ntTpWrapper<char* >
     {
         inline static void Push(lua_State* L, const char* value)             
         {
@@ -165,16 +153,16 @@ namespace Lua
         }
     };
 
-    TypeWrapper_NumberImpl(char);
-    TypeWrapper_NumberImpl(unsigned char);
-    TypeWrapper_NumberImpl(short);
-    TypeWrapper_NumberImpl(unsigned short);
-    TypeWrapper_NumberImpl(long);
-    TypeWrapper_NumberImpl(unsigned long);
-    TypeWrapper_NumberImpl(int);
-    TypeWrapper_NumberImpl(unsigned int);
-    TypeWrapper_NumberImpl(long long);
-    TypeWrapper_NumberImpl(float);
-    TypeWrapper_NumberImpl(double);
-    TypeWrapper_NoneImpl(unsigned long long);
+    ntTypeWrapper_NumberImpl(char);
+    ntTypeWrapper_NumberImpl(unsigned char);
+    ntTypeWrapper_NumberImpl(short);
+    ntTypeWrapper_NumberImpl(unsigned short);
+    ntTypeWrapper_NumberImpl(long);
+    ntTypeWrapper_NumberImpl(unsigned long);
+    ntTypeWrapper_NumberImpl(int);
+    ntTypeWrapper_NumberImpl(unsigned int);
+    ntTypeWrapper_NumberImpl(long long);
+    ntTypeWrapper_NumberImpl(float);
+    ntTypeWrapper_NumberImpl(double);
+    ntTypeWrapper_NoneImpl(unsigned long long);
 }

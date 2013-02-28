@@ -11,10 +11,10 @@ extern "C"
 #include "ntscriptexport.h"
 #include "ntCodeConvert.h"
 #include "ntConsole.h"
-#include "AxLuaBase.h"
-#include "AxLuaFunction.h"
-#include "AxLuaUser.h"
-#include "AxLuaForce.h"
+#include "ntScriptBase.h"
+#include "ntScriptForce.h"
+#include "ntScriptUser.h"
+#include "ntScriptInterface.h"
 
 #pragma warning(disable: 4996)
 
@@ -50,7 +50,7 @@ void ntScriptMgr::load()
     luaL_openlibs(m_pLuaState);
     luaopen_gs(m_pLuaState);
     excute("dofile('../data/script/boot.lua')");
-    AxLuaViodFunc("ntInit")();
+    ntLuaFunc<void>("ntInit")();
 }
 
 bool ntScriptMgr::excute( const ntString& str )
@@ -85,29 +85,25 @@ bool ntScriptMgr::excute(const std::string& rkString)
 
 void ntScriptMgr::update( float fTime )
 {
-    AxLuaViodFunc("ntUpdate")(fTime);
+    ntLuaFunc<void>("ntUpdate")(fTime);
 }
 
-// 错误的函数调用（Lua函数不存在）
 void ErrorFunction(const char* pszFunctionName)
 {
     printf("Error lua function name: %s\n", pszFunctionName);
 }
 
-// 错误的函数调用（Lua函数参数问题）
 void ErrorCall(const char* pszFunctionName, const char* pszErrorMsg)
 {
     printf("Call lua function(%s) error:%s", pszFunctionName, 
         pszErrorMsg);
 }
 
-// 错误的Lua函数参数传入
 void ErrorParameter(const char* pszTypeName)
 {
     printf("Error lua parameter type: %s\n", pszTypeName);
 }
 
-// 错误的Lua函数参数传出
 void ErrorReturn(const char* pszTypeName)
 {
     printf("Error lua return type: %s\n", pszTypeName);
@@ -155,7 +151,6 @@ static swig_type_info* querySwigType( const char* pszTypeName )
     return pTypeInfo;
 }
 
-// 向Swig中推入一个自定义类型的参数
 bool PushPointer( lua_State* L, void* ptr, const char* type_name, int owned )
 {
     swig_type_info * pTypeInfo = querySwigType(type_name);
@@ -168,7 +163,6 @@ bool PushPointer( lua_State* L, void* ptr, const char* type_name, int owned )
     return true;
 }
 
-// 从Swig中推出一个自定义类型的参数
 bool PopPointer(lua_State* L, void** ptr, const char* type_name, int idx)
 {
     swig_type_info * pTypeInfo = querySwigType(type_name);
